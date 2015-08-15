@@ -34,7 +34,7 @@ var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
 //mongoose.connect(config.database); // connect to database
 app.set('superSecret', config.secret); // secret variable
 
-MongoClient.connect("mongodb://localhost:27017/Auth", function(err, db) {
+MongoClient.connect("mongodb://heroku_0nnqckfc:9g0lk5tnvdemqgpj5hmvf6nsub@ds033153.mongolab.com:33153/heroku_0nnqckfc", function(err, db) {
   if(!err) {
 	  DB=db;
     console.log("We are connected");
