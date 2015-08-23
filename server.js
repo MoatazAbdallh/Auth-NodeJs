@@ -84,10 +84,13 @@ app.post('/register', function (req, res) {
 
             // return the information including token as JSON
             res.json({
-                success: true,
-                user: user[0],
-                message: 'User has been registered Successfully',
-                token: token
+                errorCode: 0,
+                errorMessage: "",
+                data: {
+                    user: user[0],
+                    message: 'Enjoy your token!',
+                    token: token
+                }
             });
         })
     })
@@ -98,11 +101,11 @@ app.post('/authenticate', function (req, res) {
         collection.find({ email: req.body.email }).toArray(function (err, user) {
             console.log(user);
             if (user.length == 0)
-                res.json({ success: false, status: 'notfound', message: 'Authentication failed. User not found.' });
+                res.json({ data: null, errorCode: 1, errorMessage: 'Authentication failed. User not found.' });
             else if (user)
                 // check if password matches
                 if (user[0].password != req.body.password) {
-                    res.json({ success: false, status: 'wrongpassword', message: 'Authentication failed. Wrong password.' });
+                    res.json({ data: null, errorCode: 1, errorMessage: 'Authentication failed. Wrong password.' });
                 }
                 else {
                     // if user is found and password is right
@@ -113,10 +116,13 @@ app.post('/authenticate', function (req, res) {
 
                     // return the information including token as JSON
                     res.json({
-                        success: true,
-                        user: user[0],
-                        message: 'Enjoy your token!',
-                        token: token
+                        errorCode: 0,
+                        errorMessage: "",
+                        data: {
+                            user: user[0],
+                            message: 'Enjoy your token!',
+                            token: token
+                        }
                     });
                 }
         });
