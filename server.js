@@ -62,13 +62,7 @@ app.post('/users', function (req, res) {
 
     DB.collection('User', function (err, collection) {
         collection.find({}).toArray(function (err, users) {
-            res.json({
-                        errorCode: 0,
-                        errorMessage: "",
-                        data: {
-                            users: users
-                        }
-                    });
+            res.json(users);
         });
     });
 });
@@ -138,15 +132,13 @@ app.post('/authenticate', function (req, res) {
 app.post('/create-mission', function (req, res) {
     DB.collection('Mission', function (err, collection) {
        var insertionResult =  collection.insert({
-            name: req.body.name,
-            description: req.body.description,
-            start_date_estimated: req.body.start_date_estimated,
-            end_date_estimated: req.body.end_date_estimated,
-            creator_id: req.body.creator_id,
-            owner_id: req.body.owner_id,
-            status: req.body.status,
-            award_coins: req.body.award_coins,
-            award_experience: req.body.award_experience
+            name: req.body.mission.name,
+            description: req.body.mission.description,
+            start_date_estimated: req.body.mission.start_date,
+            end_date_estimated: req.body.mission.end_date,
+            status: req.body.mission.status,
+            award_coins: req.body.mission.award_coins,
+            award_experience: req.body.mission.award_experience
         });
 
        if(insertionResult.nInserted==1)
@@ -182,4 +174,4 @@ app.post('/create-mission', function (req, res) {
 // start the server ======
 // =======================
 app.listen(port);
-console.log('Magic happens at http://localhost:' + port);	
+console.log('Magic happens at http://localhost:' + port);
