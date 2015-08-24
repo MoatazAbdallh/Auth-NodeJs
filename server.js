@@ -137,7 +137,7 @@ app.post('/authenticate', function (req, res) {
 //Create Missions
 app.post('/create-mission', function (req, res) {
     DB.collection('Mission', function (err, collection) {
-       var insertionResult =  collection.insert({
+       collection.insert({
             name: req.body.mission.name,
             description: req.body.mission.description,
             start_date_estimated: req.body.mission.start_date,
@@ -147,28 +147,13 @@ app.post('/create-mission', function (req, res) {
             award_experience: req.body.mission.award_experience
         });
 
-       if(insertionResult.nInserted==1)
            res.json({
                errorCode: 0,
                errorMessage: "",
                data: {
                    message: 'Mission Created Successfully'
                }
-           });
-       else{
-           var errmssg;
-           if(insertionResult.writeConcernError)
-               errmssg=insertionResult.writeConcernError.errmsg;
-           else
-               errmssg=insertionResult.writeError.errmsg;
-
-           res.json({
-               errorCode: 1,
-               errorMessage: errmssg,
-               data:null
-           });
-       }
-          
+           }); 
             
         })
     })
