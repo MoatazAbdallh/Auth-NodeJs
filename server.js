@@ -62,7 +62,13 @@ app.post('/users', function (req, res) {
 
     DB.collection('User', function (err, collection) {
         collection.find({}).toArray(function (err, users) {
-            res.json(users);
+            res.json({
+                        errorCode: 0,
+                        errorMessage: "",
+                        data: {
+                            users: users
+                        }
+                    });
         });
     });
 });
@@ -176,4 +182,4 @@ app.post('/create-mission', function (req, res) {
 // start the server ======
 // =======================
 app.listen(port);
-console.log('Magic happens at http://localhost:' + port);
+console.log('Magic happens at http://localhost:' + port);	
