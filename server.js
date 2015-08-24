@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
 });
 
-app.post('/users', function (req, res) {
+app.get('/users', function (req, res) {
 
     DB.collection('User', function (err, collection) {
         collection.find({}).toArray(function (err, users) {
@@ -128,47 +128,6 @@ app.post('/authenticate', function (req, res) {
         });
     });
 });
-//Create Missions
-app.post('/create-mission', function (req, res) {
-    DB.collection('Mission', function (err, collection) {
-       var insertionResult =  collection.insert({
-            name: req.body.name,
-            description: req.body.description,
-            start_date_estimated: req.body.start_date_estimated,
-            end_date_estimated: req.body.end_date_estimated,
-            creator_id: req.body.creator_id,
-            owner_id: req.body.owner_id,
-            status: req.body.status,
-            award_coins: req.body.award_coins,
-            award_experience: req.body.award_experience
-        });
-
-       if(insertionResult.nInserted==1)
-           res.json({
-               errorCode: 0,
-               errorMessage: "",
-               data: {
-                   message: 'Mission Created Successfully'
-               }
-           });
-       else{
-           var errmssg;
-           if(insertionResult.writeConcernError)
-               errmssg=insertionResult.writeConcernError.errmsg;
-           else
-               errmssg=insertionResult.writeError.errmsg;
-
-           res.json({
-               errorCode: 1,
-               errorMessage: errmssg,
-               data:null
-           });
-       }
-          
-            
-        })
-    })
-})
 // API ROUTES -------------------
 // we'll get to these in a second
 
