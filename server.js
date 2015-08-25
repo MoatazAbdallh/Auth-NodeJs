@@ -137,7 +137,7 @@ app.post('/authenticate', function (req, res) {
 //Create Missions
 app.post('/create-mission', function (req, res) {
     DB.collection('Mission', function (err, collection) {
-       collection.insert({
+        collection.insert({
             name: req.body.mission.name,
             description: req.body.mission.description,
             start_date_estimated: req.body.mission.start_date,
@@ -147,17 +147,30 @@ app.post('/create-mission', function (req, res) {
             award_experience: req.body.mission.award_experience
         });
 
-           res.json({
-               errorCode: 0,
-               errorMessage: "",
-               data: {
-                   message: 'Mission Created Successfully'
-               }
-           }); 
-            
-        })
-    })
+        res.json({
+            errorCode: 0,
+            errorMessage: "",
+            data: {
+                message: 'Mission Created Successfully'
+            }
+        });
 
+    })
+})
+app.post('/missions', function (req, res) {
+
+    DB.collection('Mission', function (err, collection) {
+        collection.find({}).toArray(function (err, missions) {
+            res.json({
+                errorCode: 0,
+                errorMessage: "",
+                data: {
+                    missions: missions
+                }
+            });
+        });
+    });
+});
 // API ROUTES -------------------
 // we'll get to these in a second
 
