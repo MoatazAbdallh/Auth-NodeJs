@@ -174,7 +174,14 @@ app.post('/missions', function (req, res) {
 app.post('/delete-mission', function (req, res) {
 
     DB.collection('Mission', function (err, collection) {
-        collection.remove({_id: new mongodb.ObjectID(req.body.mission_id)});
+        res.json({
+            errorCode: 0,
+            errorMessage: "",
+            data: {
+                missions: req.body.mission_id
+            }
+        });
+        //collection.remove({_id: new mongodb.ObjectID(req.body.mission_id)});
     });
 });
 // API ROUTES -------------------
